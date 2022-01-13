@@ -4,7 +4,7 @@
 #include <iomanip>
 using namespace std;
 
-struct item
+struct item // stores the data of every item in the program
 {
 	char name[100];
 	float price;
@@ -18,6 +18,7 @@ struct item rowA[5] = {
 	{"Sunbites Cheese and Herbs Bread Bites", 3.10, 20,},
 	{"Mr Krisps Salad Chips", 0.80, 20,},
 };
+
 struct item rowB[5] = {
 	{"Tiffany Monsta Mini Chocolate Chip Cookies", 1.00, 20},
 	{"Meiji Hello Panda Double Chocolate Biscuit", 2.00, 20},
@@ -25,6 +26,7 @@ struct item rowB[5] = {
 	{"Tiffany Vanilla Flavored Cream Biscuits", 1.15, 20},
 	{"Oreo Original", 1.00, 20},
 };
+
 struct item rowC[10] = {
 	{"Nestle Chocapic Cereals Bar", 2.80, 20},
 	{"Be-Kind Whole Grains Raspberry Cereal Bar", 3.60, 20},
@@ -37,6 +39,7 @@ struct item rowC[10] = {
 	{"Bayara Peanuts", 0.80, 20},
 	{"Ding Dong Mixed Nuts", 2.20, 20},
 };
+
 struct item rowD[10] = {
 	{"Al Ain Bottled Drinking Water", 0.95, 20},
 	{"Al Ain Bottled Drinking Water", 0.95, 20},
@@ -49,6 +52,7 @@ struct item rowD[10] = {
 	{"Aquafina Bottled Drinking Water", 0.90, 20},
 	{"Aquafina Bottled Water", 0.90, 20},
 };
+
 struct item rowE[10] = {
 	{"Pokka Cappuccino Real Brewed Coffee Drink", 4.60, 20},
 	{"Pokka Milk Coffee Drink", 4.80, 20},
@@ -61,6 +65,7 @@ struct item rowE[10] = {
 	{"Balade Farms Ayran Laban", 1.30, 20},
 	{"Almarai Laban Mango Flavor", 2.70, 20},
 };
+
 struct item rowF[10] = {
 	{"Gatorade Sports Drink Orange", 5.00, 20},
 	{"Gatorade Sports Drink Cool Blue Raspberry", 5.00, 20},
@@ -73,7 +78,8 @@ struct item rowF[10] = {
 	{"Lipton Lemon Ice Tea", 3.70, 20},
 	{"Lipton Peach Ice Tea", 2.50, 20},
 };
-// array of row arrays
+
+// creating an array of row arrays for a cleaner way of storing the rows' data
 struct item *rows[6] = {
 	rowA,
 	rowB,
@@ -82,6 +88,8 @@ struct item *rows[6] = {
 	rowE,
 	rowF,
 };
+
+// getting every row's array size
 int rows_lengths[6] = {
 	sizeof(rowA) / sizeof(rowA[0]),
 	sizeof(rowB) / sizeof(rowB[0]),
@@ -106,23 +114,25 @@ int main()
 	myRow = toupper(myRow);
 	cout << fixed;
 	cout << setprecision(2);
-	if ((myRow > 'F') || (myRow < 'A'))
+	if ((myRow > 'F') || (myRow < 'A')) /* if-else makes the code look cleaner than having to put multiple switch
+	statements like originally intended */
 	{
-		cout << "Invalid input" << endl;
+		cout << "Invalid input" << endl; // tells the user they made an invalid input on the program
 	}
 	else
 	{
 		struct item *row = rows[myRow - 'A'];
-		int row_len = rows_lengths[myRow - 'A'];
+		int row_len = rows_lengths[myRow - 'A']; 
 
 		int choice = 1;
 
-		while (true)
+		while (true) // a while loop makes the user able to use the machine as many times as they can
 		{
-			for (int i = 0; i < row_len; i++)
+			for (int i = 0; i < row_len; i++) /* a for loop makes the code look much neater than writing strcpy strings
+			multiple times like in the original code */
 			{
 				cout << i + 1 << ". " << row[i].name << "\r\t\t\t\t\t\t" << row[i].price << "\t(" << row[i].quantity << ") in stock" << endl;
-			}
+			} // \t is used to create space between the name, price and quantity
 			cout << "11. Exit" << endl;
 			cin >> choice;
 			if (choice == 11)
@@ -146,15 +156,16 @@ int main()
 					float price = row[choice - 1].price;
 					if (cash < price)
 					{
-						cout << "Insufficient amount " << endl;
+						cout << "Insufficient amount " << endl; // tells the user the inputed amount of money is insufficient
 						continue;
 					}
 					else
 					{
 						float change = cash - price;
-						cout << row[choice - 1].name << " has been dispensed" << endl;
-						cout << "Enjoy your snack!" << endl;
-						cout << "Change: " << change << endl;
+						cout << row[choice - 1].name << " has been dispensed" << endl; /* tells the user their item of choice 
+						has been dispensed */
+						cout << "Enjoy your snack/drink!" << endl;
+						cout << "Change: " << change << endl; // tells the user their change
 					}
 				}
 			}
