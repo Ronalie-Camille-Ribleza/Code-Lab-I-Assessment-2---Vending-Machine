@@ -6,7 +6,7 @@ using namespace std;
 
 struct item // stores the data of every item in the program
 {
-	char name[100];
+	char name[100]; // character limit in brackets
 	float price;
 	unsigned quantity;
 };
@@ -79,7 +79,7 @@ struct item rowF[10] = {
 	{"Lipton Peach Ice Tea", 2.50, 20},
 };
 
-// creating an array of row arrays for a cleaner way of storing the rows' data
+// creating an array of row arrays
 struct item *rows[6] = {
 	rowA,
 	rowB,
@@ -89,7 +89,7 @@ struct item *rows[6] = {
 	rowF,
 };
 
-// getting every row's array size
+// sizeof is used in order to find the sizes of each row
 int rows_lengths[6] = {
 	sizeof(rowA) / sizeof(rowA[0]),
 	sizeof(rowB) / sizeof(rowB[0]),
@@ -101,57 +101,60 @@ int rows_lengths[6] = {
 
 int main()
 {
-	cout << "Affordabites Food and Drink Vending Machine" << endl;
-	cout << "All snacks available for AED5 and below!" << endl;
+	cout << "Affordabites Food and Drink Vending Machine" << endl; // vending machine brand name
+	cout << "All snacks available for AED5 and below!" << endl; // brand slogan/catchphrase
 	cout << " " << endl;
 
-	cout << "Please select which row you want to get an item from: " << endl;
+	cout << "Please select which row you want to get an item from: " << endl; /* the following lines are the different 
+	categories of items */
 	cout << "Row A - Savory Snacks\t\tRow B - Sweet Snacks\t\t\t\tRow C - Cereal Bars and Nuts" << endl;
 	cout << "Row D - Drinking Water\t\tRow E - Coffee and Other Dairy Products\t\tRow F - Healthy Drinks" << endl;
 	char myRow;
 	cin >> myRow; // makes the user select a specific row on the vending machine, but only one row at a time
 
-	myRow = toupper(myRow);
-	cout << fixed;
-	cout << setprecision(2);
+	myRow = toupper(myRow); /* makes sure that the letter is registered in uppercase regardless of the case the letter 
+	is entered in */
+	cout << fixed; // provides precision to floating point numbers
+	cout << setprecision(2); // sets the decimal places of the item's prices
 	if ((myRow > 'F') || (myRow < 'A')) /* if-else makes the code look cleaner than having to put multiple switch
-	statements like originally intended */
+	statements */
 	{
 		cout << "Invalid input" << endl; // tells the user they made an invalid input on the program
 	}
 	else
 	{
-		struct item *row = rows[myRow - 'A'];
-		int row_len = rows_lengths[myRow - 'A']; 
+		struct item *row = rows[myRow - 'A']; // the block of code above the rows_lengths array
+		int row_len = rows_lengths[myRow - 'A']; // determines the maximum number for the items in a row
 
-		int choice = 1;
+		int choice = 1; // a minimum number
 
 		while (true) // a while loop makes the user able to use the machine as many times as they can
 		{
-			for (int i = 0; i < row_len; i++) /* a for loop makes the code look much neater than writing strcpy strings
-			multiple times like in the original code */
+			for (int i = 0; i < row_len; i++) /* a for loop makes the code look much neater than writing multiple strcpy strings
+			multiple times */
 			{
 				cout << i + 1 << ". " << row[i].name << "\r\t\t\t\t\t\t" << row[i].price << "\t(" << row[i].quantity << ") in stock" << endl;
 			} // \t is used to create space between the name, price and quantity
-			cout << "11. Exit" << endl;
+			cout << "11. Exit" << endl; // the exit option, the number is 11 due to the rest of the rows having 10 options
 			cin >> choice;
 			if (choice == 11)
 			{
-				cout << "Come back next time!" << endl;
+				cout << "Come back next time!" << endl; // A simple goodbye message to the user
 				break;
 			}
 			else if (choice >= 1 && choice <= row_len)
 			{
 				if (row[choice - 1].quantity == 0)
 				{
-					cout << row[choice - 1].name << " is currently unavailable";
+					cout << row[choice - 1].name << " is currently unavailable"; /* tells the user that the item they wish
+					to purchase is currently unavailable */
 					continue;
 				}
 				else
 				{
-					row[choice - 1].quantity--;
+					row[choice - 1].quantity--; // subtracts one quantity of an item after purchase
 					float cash;
-					cout << "Insert any number of coins or cash: " << endl;
+					cout << "Insert any number of coins or cash: " << endl; // asks the user to enter their amount of money
 					cin >> cash;
 					float price = row[choice - 1].price;
 					if (cash < price)
@@ -161,7 +164,7 @@ int main()
 					}
 					else
 					{
-						float change = cash - price;
+						float change = cash - price; /* subtracts the item's cost from the entered amount of money */
 						cout << row[choice - 1].name << " has been dispensed" << endl; /* tells the user their item of choice 
 						has been dispensed */
 						cout << "Enjoy your snack/drink!" << endl;
